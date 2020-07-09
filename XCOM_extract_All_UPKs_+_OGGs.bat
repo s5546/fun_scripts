@@ -15,7 +15,7 @@ echo ('E:\LW mods\decompressUPK\FinalSoundOggs') to your path to the 'FinalSound
 echo I dont remember why I needed an absolute path but I'm sure it didnt work otherwise
 
 
-REM -----------Extract UPKs-----------
+echo -----------Extract UPKs-----------
 echo Extracting files from UPKs...
 SET count=1
 FOR /f "tokens=*" %%G IN ('dir /b /s allUPKs') DO (
@@ -27,15 +27,17 @@ extract.exe "%%G" -out=extractedUPKs\
 )
 set /a count+=1 )
 
-REM -----------Scan extracted files for OGG files contained within-----------
+echo -----------Scan extracted files for OGG files contained within-----------
 echo Scanning extracted files for OGGs... Keep an eye on your powershell instances in Task Manager: 
 echo There should be an instance using a high amount of CPU time, using a some HDD time, and slowly gaining memory.
 echo This instance first recursively scans extractedUPKs/, and then runs oggextract.exe on all found files.
 echo This could take an OUTRAGEOUSLY long time depending on how many UPKs you extracted. Be patient pls
-echo If you're extracting the entire game, this could take on the order of DAYS.
-echo (for me, this took over two days of sitting at this prompt, waiting.)
-echo (i have no idea why it takes this long, so feel free to fix my code lmao)
-echo (Its the recursive directory listing that takes forever- theres a lot but i dont think there's 2 days worth)
+echo If you've extracted the entire game, this could take on the order of DAYS. Just the recursive 
+echo  directory listing takes up about 400MB of space, with just under 3 million unique lines.
+echo (i have no idea why it takes this long- even just running that command only takes about 20 minutes)
+echo (if you know why, please fix my code and i'll update the repo)
+echo 
+echo If you don't need the OGGs, feel free to kill this process- the assets are already extracted.
 SET count=1
  FOR /f "tokens=*" %%G IN ('dir /b /s extractedUPKs') DO (
  echo Now scanning %%~nG...
