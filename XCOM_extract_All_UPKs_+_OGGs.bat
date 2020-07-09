@@ -9,24 +9,25 @@ REM 3) Folder "FinalSoundOggs" (where any .OGG files found will be placed)
 REM 4) Program "extract.exe" (the Unreal Package Extractor, downloaded from https://www.gildor.org/downloads)
 REM 5) Program "oggextract.exe" (a program that parses all files for embedded OGGs, downloaded from https://moriya.ca/oggextract/)
 
-echo <<<IMPORTANT>>>
+echo -----------IMPORTANT-----------
 echo If you intend to use the OGG extracting feature of this program, change the mv command's second argument 
 echo ('E:\LW mods\decompressUPK\FinalSoundOggs') to your path to the 'FinalSoundOggs' folder-
 echo I dont remember why I needed an absolute path but I'm sure it didnt work otherwise
 
 
-REM <<Extract UPKs>>
+REM -----------Extract UPKs-----------
 echo Extracting files from UPKs...
 SET count=1
 FOR /f "tokens=*" %%G IN ('dir /b /s allUPKs') DO (
-IF EXIST "%%~nG" (
+IF EXIST "extractedUPKs\%%~nG" (
 echo File exists, passing...
 ) ELSE (
+echo Extracting %%G
 extract.exe "%%G" -out=extractedUPKs\
 )
 set /a count+=1 )
 
-REM <<Scan extracted files for OGG files contained within>>
+REM -----------Scan extracted files for OGG files contained within-----------
 echo Scanning extracted files for OGGs... Keep an eye on your powershell instances in Task Manager: 
 echo There should be an instance using a high amount of CPU time, using a some HDD time, and slowly gaining memory.
 echo This instance first recursively scans extractedUPKs/, and then runs oggextract.exe on all found files.
